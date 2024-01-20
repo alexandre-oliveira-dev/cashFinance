@@ -1,5 +1,5 @@
-import { Button, StyleSheet, Text, View } from "react-native";
-
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { CiHome } from "react-icons/ci";
 
 export default function NavBar() {
 
@@ -7,15 +7,15 @@ export default function NavBar() {
         {
             key: 'inicio',
             title: 'Inicio',
-            function: () => { }
-            
+            function: () => { },
+            icon:<CiHome color="#fff" size={30}></CiHome>
         }
     ]
     const styles = StyleSheet.create({
         navbar: {
             width: "100%",
             height: 60,
-            backgroundColor: "green",
+            backgroundColor: "#612F74",
             display: 'flex',
             flexDirection: "row",
             alignItems: "center",
@@ -29,7 +29,7 @@ export default function NavBar() {
             {
                 buttons.map((i) => {
                     return (
-                        <Button key={i.key} title={i.title}></Button>
+                        <TouchableOpacity key={i.key}  >{i.icon }</TouchableOpacity>
                     )
                 })
             }

@@ -1,8 +1,14 @@
-import { Text } from "react-native";
+import React, { CSSProperties } from "react";
+import {  Text,  } from "react-native";
+
+interface TitleProps{
+    text: String,
+    style?:React.CSSProperties
+}
 
 
-export default function Title(size:number,text: string,level:"normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900" ) {
+export default function Title({ style, text }: TitleProps) {
     return (
-        <Text style={{fontWeight:level,fontSize:size}}>{text}</Text>
+        <Text style={{...style as any}}>{text}</Text>
     )
 }
