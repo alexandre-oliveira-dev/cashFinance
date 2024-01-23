@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Title from "../../components/title";
-import firebase from '../../service/firebaseConnection'
+import { doc,collection, addDoc, setDoc} from 'firebase/firestore'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from 'firebase/auth'
 import { useNavigation } from "@react-navigation/native";
+import {  auth, db } from "../../service/firebaseConnection";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 export default function Singin() {
@@ -11,26 +14,19 @@ export default function Singin() {
     const [senha, setSenha] = useState('')
     const navigation = useNavigation()
 
+    
+
     async function HandleLoginSession({ email, password }: { email: string, password: string }) {
     if(!email || !password)return;
     try {
-        console.log('clico');
-
-        const userCredential = await firebase?.auth().signInWithEmailAndPassword(email, password);
-
-        if (userCredential && userCredential.user) {
-            const uid = userCredential.user.uid;
-            console.log(uid);
-
-            await firebase.firestore().collection('currentSession').doc(uid).set({ uid: uid })
-                .then(() => {
-                
-                    console.log('deu certo');
-                })
-            .catch(()=> console.log('errado'))
-        } else {
-            console.log('Usuário não encontrado');
-        }
+        await signInWithEmailAndPassword(auth, email, password).then(async (user) => {
+          await AsyncStorage.setItem('@currentSession', JSON.stringify({
+                uid: user?.user?.uid,
+                email: user?.user.email
+            }))
+        })
+        //console.log(await AsyncStorage.getItem('@currentSession'))
+        
     } catch (error) {
         console.error('Erro ao fazer login:', error);
     }
