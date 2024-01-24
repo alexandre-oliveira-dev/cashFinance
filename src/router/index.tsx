@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
-import {ActivityIndicator,View } from 'react-native'
+import React, { useContext } from "react";
 import AuthRoutes from "./auth.routes";
+import Home from "../pages/home";
+import { AuthContext } from "./auth.context";
 
 function Routes() {
-
-    useEffect
-    const loading = false
-    const signed = false
-
+    const {hasLogin} = useContext(AuthContext)    
     return (
-        signed?
-            <View></View>
-            :
-            <AuthRoutes></AuthRoutes>
+      hasLogin?
+        <Home></Home>
+        :
+        <AuthRoutes></AuthRoutes>
     )
 }
 export default Routes;

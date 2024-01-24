@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import Title from "../../components/title";
 import { doc,collection, addDoc, setDoc} from 'firebase/firestore'
@@ -6,6 +6,9 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} fr
 import { useNavigation } from "@react-navigation/native";
 import {  auth, db } from "../../service/firebaseConnection";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../router/auth.context";
+import Toast from "react-native-toast-message";
+import ToastComponent from "../../components/toast";
 
 
 export default function Singin() {
@@ -13,22 +16,26 @@ export default function Singin() {
     const [email, setEmail] = useState('')
     const [senha, setSenha] = useState('')
     const navigation = useNavigation()
-
-    
+    const {setHasLogin} = useContext(AuthContext)
 
     async function HandleLoginSession({ email, password }: { email: string, password: string }) {
-    if(!email || !password)return;
+        if (!email || !password) {
+            ToastComponent({type:'info'},{title:'Preencha todos os campos!'})
+            return
+    };
     try {
-        await signInWithEmailAndPassword(auth, email, password).then(async (user) => {
+        await signInWithEmailAndPassword(auth, email, password)
+            .then(async (user) => {
           await AsyncStorage.setItem('@currentSession', JSON.stringify({
                 uid: user?.user?.uid,
                 email: user?.user.email
-            }))
+          }))
+            ToastComponent({type:'success'},{title:`Seja bem vido(a) ${user.user.email}`})
+          setHasLogin(true)
         })
-        //console.log(await AsyncStorage.getItem('@currentSession'))
         
     } catch (error) {
-        console.error('Erro ao fazer login:', error);
+        ToastComponent({type:'error'},{title:'Email ou senha inválidos ou usuário não cadastrado.'})
     }
 }
     return (
@@ -46,7 +53,7 @@ export default function Singin() {
                 style={styles.btn}>
                  <Title text={'Entrar'} style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}></Title>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Signup" as unknown as never)}>
+            <TouchableOpacity onPress={() => navigation.navigate("Singup" as unknown as never)}>
              <Title text={'Não possui cadastro?, cadastre-se'} style={{ color: '#fff', fontSize: 15, fontWeight: 'normal' }}></Title>
             </TouchableOpacity>
         </View>
