@@ -1,9 +1,13 @@
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
 import Movimentation from "../../components/movimentation";
 import NavBar from "../../components/navbar";
 import Title from "../../components/title";
+import SelectMonth from "../../components/selectMonth";
+import dayjs from "dayjs";
+import {useState} from "react";
 
 function Home() {
+  const [open, setOpen] = useState(false);
   return (
     <View style={styles.container}>
       <View style={styles.boxSaldo}>
@@ -17,6 +21,41 @@ function Home() {
         ></Title>
       </View>
       <Movimentation></Movimentation>
+      <View
+        style={{
+          width: "100%",
+          marginTop: 20,
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            width: "95%",
+            backgroundColor: "#612F74",
+            height: 40,
+            borderRadius: 10,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={() => {
+            if (open) {
+              setOpen(false);
+              return;
+            }
+            setOpen(true);
+          }}
+        >
+          <Title
+            style={{color: "#fff", fontSize: 18}}
+            text={dayjs().format("MMMM")}
+          ></Title>
+        </TouchableOpacity>
+      </View>
+      {open && <SelectMonth show={open} ></SelectMonth>}
       <NavBar></NavBar>
     </View>
   );

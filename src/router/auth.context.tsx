@@ -21,10 +21,8 @@ export function AuthProvider({children}: any) {
       });
     loadUser();
   }, []);
-  console.log("🚀 ~ AuthProvider ~ data:", data);
 
   const [hasLogin, setHasLogin] = useState(data?.uid !== null ? true : false);
-  console.log("🚀 ~ AuthProvider ~ hasLogin:", hasLogin);
 
   return (
     <AuthContext.Provider

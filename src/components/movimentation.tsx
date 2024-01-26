@@ -15,11 +15,11 @@ export default function Movimentation() {
     box: {
       flex: 1,
       height: 100,
-      backgroundColor: "#fff",
+      backgroundColor: "#e5e5e5",
       borderRadius: 10,
     },
     textSaldo: {
-      fontSize: 17,
+      fontSize: 20,
       fontWeight: "400",
       margin: 10,
       fontFamily: "montserrat, sans-serif",
@@ -32,7 +32,7 @@ export default function Movimentation() {
           <Title
             text={"Entradas"}
             style={{
-              color: "#83e509",
+              color: "#612F74",
               margin: 10,
               fontSize: 20,
               fontWeight: "bold",
