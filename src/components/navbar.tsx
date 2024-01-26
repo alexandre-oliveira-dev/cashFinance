@@ -13,14 +13,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useContext} from "react";
 import {AuthContext} from "../router/auth.context";
 import ToastComponent from "./toast";
+import {useNavigation} from "@react-navigation/native";
 export default function NavBar() {
   const {setHasLogin} = useContext(AuthContext);
+  const navigation = useNavigation();
 
   const buttons = [
     {
       key: "inicio",
       title: "Inicio",
-      function: () => {},
+      function: () => navigation.navigate("Home" as never),
+      icon: (
+        <Image
+          source={{
+            uri: "https://img.icons8.com/fluency-systems-regular/40/ffffff/home--v1.png",
+            width: 40,
+            height: 40,
+          }}
+        ></Image>
+      ),
+    },
+    {
+      key: "realeases",
+      title: "Lançamentos",
+      function: () => navigation.navigate("Realeases" as never),
       icon: (
         <Image
           source={{
@@ -53,9 +69,9 @@ export default function NavBar() {
       icon: (
         <Image
           source={{
-            uri: "https://img.icons8.com/ios/40/ffffff/exit--v1.png",
-            width: 40,
-            height: 40,
+            uri: "https://img.icons8.com/ios/35/ffffff/exit--v1.png",
+            width: 35,
+            height: 35,
           }}
         ></Image>
       ),
@@ -72,6 +88,7 @@ export default function NavBar() {
       padding: 10,
       position: "absolute",
       bottom: 0,
+      justifyContent: "space-around",
     },
   });
   return (

@@ -1,39 +1,52 @@
-import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Singin from '../pages/singin';
-import Singup from '../pages/sinngup';
-import Home from '../pages/home';
-
+import React from "react";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import Singin from "../pages/singin";
+import Singup from "../pages/sinngup";
+import Home from "../pages/home";
+import Realeases from "../pages/realeases";
 
 const AuthStack = createNativeStackNavigator();
 
-function AuthRoutes(){
-  return(
+function AllRoutes() {
+  return (
     <AuthStack.Navigator>
       <AuthStack.Screen
-        name='Singin'
-        component={Singin}
-        options={{
-          headerShown:false
-        }}
-        
-      ></AuthStack.Screen>
-      <AuthStack.Screen
-        name='Singup'
-        component={Singup}
-        options={{
-          headerShown:false
-        }}
-      ></AuthStack.Screen>
-      <AuthStack.Screen
-        name='Home'
+        name="Home"
         component={Home}
         options={{
-          headerShown:false
+          headerShown: false,
         }}
       ></AuthStack.Screen>
-   </AuthStack.Navigator>
-  )
+      <AuthStack.Screen
+        name="Realeases"
+        component={Realeases}
+        options={{
+          headerShown: false,
+        }}
+      ></AuthStack.Screen>
+    </AuthStack.Navigator>
+  );
 }
 
-export default AuthRoutes;
+function AuthRoutes() {
+  return (
+    <AuthStack.Navigator>
+      <AuthStack.Screen
+        name="Singin"
+        component={Singin}
+        options={{
+          headerShown: false,
+        }}
+      ></AuthStack.Screen>
+      <AuthStack.Screen
+        name="Singup"
+        component={Singup}
+        options={{
+          headerShown: false,
+        }}
+      ></AuthStack.Screen>
+    </AuthStack.Navigator>
+  );
+}
+
+export {AllRoutes, AuthRoutes};

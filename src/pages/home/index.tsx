@@ -56,7 +56,6 @@ function Home() {
         </TouchableOpacity>
       </View>
       {open && <SelectMonth show={open} ></SelectMonth>}
-      <NavBar></NavBar>
     </View>
   );
 }
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     backgroundColor: "#121212",
+    flex:1
   },
   boxSaldo: {
     width: "100%",

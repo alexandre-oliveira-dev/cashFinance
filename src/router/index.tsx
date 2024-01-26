@@ -1,10 +1,19 @@
 import React, {useContext} from "react";
-import AuthRoutes from "./auth.routes";
+import {AuthRoutes, AllRoutes} from "./auth.routes";
 import Home from "../pages/home";
 import {AuthContext} from "./auth.context";
+import {View} from "react-native";
+import NavBar from "../components/navbar";
 
 function Routes() {
   const {hasLogin} = useContext(AuthContext);
-  return hasLogin ? <Home></Home> : <AuthRoutes></AuthRoutes>;
+  return hasLogin ? (
+    <View style={{flex: 1}}>
+      <AllRoutes></AllRoutes>
+      <NavBar></NavBar>
+    </View>
+  ) : (
+    <AuthRoutes></AuthRoutes>
+  );
 }
 export default Routes;
