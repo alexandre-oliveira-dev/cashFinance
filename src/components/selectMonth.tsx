@@ -1,30 +1,44 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {View} from "react-native";
 import {Calendar} from "react-native-calendars";
+import {AuthContext} from "../router/auth.context";
+import dayjs from "dayjs";
 
-export default function SelectMonth({
-  date,
-  show,
-}: {
-  date?: string;
-  show: boolean;
-}) {
-  const [open, setOpen] = useState(show);
+export default function SelectMonth() {
+  const {open, setOpen, setDate, date} = useContext(AuthContext);
   return (
     <View
       style={{
-        flex: 2,
-        position: "absolute",
-        width: "100%",
+        flex: 1,
         display: !open ? "none" : "flex",
+        flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center",
         zIndex: 100,
+        width: "100%",
         height: "100%",
+        alignItems: "center",
+        position: "absolute",
       }}
-      onPointerDown={() => setOpen(false)}
     >
-      <Calendar monthFormat="MMMM" date={date}></Calendar>
+      <View
+        onPointerDown={() => setOpen(false)}
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+        }}
+      ></View>
+      <View style={{width: "100%"}}>
+        <Calendar
+          style={{width: "100%"}}
+          monthFormat="MMMM"
+          date={date}
+          onDayPress={e => {
+            setDate(dayjs(e.dateString).format("DD/MM/YYYY"));
+            setOpen(false);
+          }}
+        ></Calendar>
+      </View>
     </View>
   );
 }

@@ -6,22 +6,78 @@ import {
   View,
 } from "react-native";
 import Title from "../../components/title";
-import {useState} from "react";
-import {Calendar} from "react-native-calendars";
+import {useContext, useState} from "react";
 import SelectMonth from "../../components/selectMonth";
+import {AuthContext} from "../../router/auth.context";
+import MaskInput, {createNumberMask} from "react-native-mask-input";
+import Toast from "react-native-toast-message";
+import ToastComponent from "../../components/toast";
+import {addDoc, collection} from "firebase/firestore";
+import {db} from "../../service/firebaseConnection";
+import uuid from "react-native-uuid";
+import dayjs from "dayjs";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const styles = StyleSheet.create({
+  input: {
+    width: "90%",
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    height: 40,
+    padding: 5,
+  },
+});
+
+const moneyMask = createNumberMask({
+  prefix: ["R", "$", " "],
+  delimiter: ".",
+  separator: ",",
+  precision: 2,
+});
 
 export default function Realeases() {
   const [realeaseType, setRealeaseType] = useState(false);
-  const [openCalendar, setOpenCalendar] = useState(false);
-  const styles = StyleSheet.create({
-    input: {
-      width: "90%",
-      backgroundColor: "#fff",
-      borderRadius: 5,
-      height: 40,
-      padding: 5,
-    },
-  });
+  const [desc, setDesc] = useState("");
+  const [value, setValue] = useState("");
+  const {setOpen, open, data, date, setDate} = useContext(AuthContext);
+
+  async function HandleCreateRealease() {
+    if (!desc || !value || !date)
+      return ToastComponent(
+        {type: "info"},
+        {title: "Preencha todos os campos!"}
+      );
+
+    /*  console.log({
+      uid: uuid.v4(),
+      userEmail: data?.email,
+      desc,
+      value,
+      date: dayjs(date).format("DD/MM/YYYY"),
+      type: realeaseType ? "saida" : "entrada",
+    }); */
+    await addDoc(collection(db, "lancamentos"), {
+      uid: uuid.v4(),
+      userEmail: data?.email,
+      desc,
+      value: Number(value) / 100,
+      date,
+      type: realeaseType ? "saida" : "entrada",
+    })
+      .then(() => {
+        setDesc("");
+        setValue("");
+        setDate("");
+        ToastComponent(
+          {type: "success"},
+          {title: "Lançamento registrado com sucesso!"}
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   return (
     <View
       style={{
@@ -96,26 +152,36 @@ export default function Realeases() {
         }}
       >
         <Title text={"Descrição"} style={{fontSize: 17, color: "#fff"}}></Title>
-        <TextInput style={styles.input} placeholder="Digite aqui"></TextInput>
+        <TextInput
+          value={desc}
+          onChangeText={e => setDesc(e)}
+          style={styles.input}
+          placeholder="Digite aqui"
+        ></TextInput>
         <Title text={"Valor R$"} style={{fontSize: 17, color: "#fff"}}></Title>
-        <TextInput style={styles.input} placeholder="Digite aqui"></TextInput>
+        <MaskInput
+          value={value}
+          mask={moneyMask}
+          style={styles.input}
+          placeholder={"R$"}
+          onChangeText={(_masked, unmasked) => setValue(unmasked)}
+        ></MaskInput>
         <Title text={"Data"} style={{fontSize: 17, color: "#fff"}}></Title>
         <TouchableOpacity
           style={{width: "90%", padding: 10, backgroundColor: "#612F74"}}
           onPress={() => {
-            if (openCalendar) {
-              setOpenCalendar(false);
+            if (open) {
+              setOpen(false);
               return;
             }
-            setOpenCalendar(true);
+            setOpen(true);
           }}
         >
           <Title
-            text={"Escolher data"}
+            text={`Escolha a data  ${date && dayjs(date).format("DD/MM/YYYY")}`}
             style={{fontSize: 17, color: "#fff"}}
           ></Title>
         </TouchableOpacity>
-        <SelectMonth show={openCalendar}></SelectMonth>
 
         <TouchableOpacity
           style={{
@@ -126,10 +192,12 @@ export default function Realeases() {
             justifyContent: "center",
             flexDirection: "row",
           }}
+          onPress={HandleCreateRealease}
         >
           <Title text={"Salvar"} style={{fontSize: 17, color: "#fff"}}></Title>
         </TouchableOpacity>
       </View>
+      <SelectMonth></SelectMonth>
     </View>
   );
 }

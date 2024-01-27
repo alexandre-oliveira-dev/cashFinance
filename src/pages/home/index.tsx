@@ -1,13 +1,15 @@
 import {StyleSheet, TouchableOpacity, View} from "react-native";
-import Movimentation from "../../components/movimentation";
-import NavBar from "../../components/navbar";
 import Title from "../../components/title";
 import SelectMonth from "../../components/selectMonth";
 import dayjs from "dayjs";
-import {useState} from "react";
+import {useContext} from "react";
+import {AuthContext} from "../../router/auth.context";
+import {List} from "../../components/list";
+import Movimentation from "../../components/movimentation";
+import {formater} from "../../common/priceFormater";
 
 function Home() {
-  const [open, setOpen] = useState(false);
+  const {setOpen, open, saldo, date} = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <View style={styles.boxSaldo}>
@@ -16,7 +18,7 @@ function Home() {
           style={{fontSize: 15, fontWeight: "normal", color: "#fff"}}
         ></Title>
         <Title
-          text={"R$ 4000,00"}
+          text={formater({price: saldo})}
           style={{fontSize: 35, fontWeight: "bold", color: "#fff"}}
         ></Title>
       </View>
@@ -51,11 +53,23 @@ function Home() {
         >
           <Title
             style={{color: "#fff", fontSize: 18}}
-            text={dayjs().format("MMMM")}
+            text={date}
           ></Title>
         </TouchableOpacity>
       </View>
-      {open && <SelectMonth show={open} ></SelectMonth>}
+      <View
+        style={{
+          marginTop: 30,
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignContent: "center",
+        }}
+      >
+        <List></List>
+      </View>
+      <SelectMonth></SelectMonth>
     </View>
   );
 }
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     backgroundColor: "#121212",
-    flex:1
+    flex: 1,
   },
   boxSaldo: {
     width: "100%",

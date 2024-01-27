@@ -7,6 +7,7 @@ import NavBar from "../components/navbar";
 
 function Routes() {
   const {hasLogin} = useContext(AuthContext);
+  console.log("🚀 ~ Routes ~ hasLogin:", hasLogin)
   return hasLogin ? (
     <View style={{flex: 1}}>
       <AllRoutes></AllRoutes>

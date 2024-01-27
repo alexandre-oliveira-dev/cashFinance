@@ -1,7 +1,11 @@
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import Title from "./title";
+import {useContext} from "react";
+import {AuthContext} from "../router/auth.context";
+import {formater} from "../common/priceFormater";
 
 export default function Movimentation() {
+  const {saida, entrada} = useContext(AuthContext);
   const styles = StyleSheet.create({
     container: {
       width: "100%",
@@ -38,7 +42,7 @@ export default function Movimentation() {
               fontWeight: "bold",
             }}
           ></Title>
-          <Text style={styles.textSaldo}>R$ 6.000,00</Text>
+          <Text style={styles.textSaldo}>{formater({price: entrada})}</Text>
         </View>
         <View style={styles.box}>
           <Title
@@ -51,7 +55,7 @@ export default function Movimentation() {
             }}
           ></Title>
 
-          <Text style={styles.textSaldo}>R$ 2.000,00</Text>
+          <Text style={styles.textSaldo}>{formater({price: saida})}</Text>
         </View>
       </View>
     </View>

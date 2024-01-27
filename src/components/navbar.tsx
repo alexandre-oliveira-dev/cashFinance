@@ -40,9 +40,9 @@ export default function NavBar() {
       icon: (
         <Image
           source={{
-            uri: "https://img.icons8.com/fluency-systems-regular/40/ffffff/home--v1.png",
-            width: 40,
-            height: 40,
+            uri: "https://img.icons8.com/sf-regular-filled/40/ffffff/list.png",
+            width: 35,
+            height: 35,
           }}
         ></Image>
       ),
@@ -70,8 +70,8 @@ export default function NavBar() {
         <Image
           source={{
             uri: "https://img.icons8.com/ios/35/ffffff/exit--v1.png",
-            width: 35,
-            height: 35,
+            width: 30,
+            height: 30,
           }}
         ></Image>
       ),
