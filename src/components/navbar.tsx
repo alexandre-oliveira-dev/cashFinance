@@ -1,12 +1,9 @@
 import {
-  Button,
   Image,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import {IoExitOutline} from "react-icons/io5";
 import {signOut} from "firebase/auth";
 import {auth} from "../service/firebaseConnection";
 import AsyncStorage from "@react-native-async-storage/async-storage";

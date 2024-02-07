@@ -5,7 +5,6 @@ import {db} from "../service/firebaseConnection";
 import Title from "./title";
 import {formater} from "../common/priceFormater";
 import {AuthContext} from "../router/auth.context";
-import dayjs from "dayjs";
 
 interface DataProps {
   date?: string; // A data original como string
@@ -46,7 +45,6 @@ function List() {
     loadPosts();
   }, []);
 
-  console.log(date);
 
   const entradaValue = data
     .filter(
@@ -69,7 +67,6 @@ function List() {
   const saldo = entradaValue - saidaValue;
   setSaldo(saldo);
 
-  console.log(dayjs().format("DD/MM/YYYY"));
   return (
     <FlatList
       data={data.filter(

@@ -10,13 +10,10 @@ import {useContext, useState} from "react";
 import SelectMonth from "../../components/selectMonth";
 import {AuthContext} from "../../router/auth.context";
 import MaskInput, {createNumberMask} from "react-native-mask-input";
-import Toast from "react-native-toast-message";
 import ToastComponent from "../../components/toast";
 import {addDoc, collection} from "firebase/firestore";
 import {db} from "../../service/firebaseConnection";
 import uuid from "react-native-uuid";
-import dayjs from "dayjs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const styles = StyleSheet.create({
   input: {
@@ -118,7 +115,7 @@ export default function Realeases() {
             style={{
               color: "red",
               padding: 5,
-              background: "#f4796b",
+              backgroundColor: "#f4796b",
               fontSize: 15,
               fontWeight: "bold",
               transition: "0.3s ease-in",
@@ -178,7 +175,7 @@ export default function Realeases() {
           }}
         >
           <Title
-            text={`Escolha a data  ${date && dayjs(date).format("DD/MM/YYYY")}`}
+            text={`Escolha a data  ${date}`}
             style={{fontSize: 17, color: "#fff"}}
           ></Title>
         </TouchableOpacity>

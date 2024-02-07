@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import {View} from "react-native";
 import {Calendar} from "react-native-calendars";
 import {AuthContext} from "../router/auth.context";

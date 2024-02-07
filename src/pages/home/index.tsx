@@ -1,7 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from "react-native";
 import Title from "../../components/title";
 import SelectMonth from "../../components/selectMonth";
-import dayjs from "dayjs";
 import {useContext} from "react";
 import {AuthContext} from "../../router/auth.context";
 import {List} from "../../components/list";

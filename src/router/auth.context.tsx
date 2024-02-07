@@ -49,8 +49,6 @@ export function AuthProvider({children}: any) {
     loadUser();
   }, [data?.uid]);
 
-  console.log(data.uid);
-
   return (
     <AuthContext.Provider
       value={{

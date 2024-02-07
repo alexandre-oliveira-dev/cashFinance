@@ -1,17 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {StyleSheet, TextInput, TouchableOpacity, View} from "react-native";
 import Title from "../../components/title";
-import {doc, collection, addDoc, setDoc} from "firebase/firestore";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-} from "firebase/auth";
+import {signInWithEmailAndPassword} from "firebase/auth";
 import {useNavigation} from "@react-navigation/native";
-import {auth, db} from "../../service/firebaseConnection";
+import {auth} from "../../service/firebaseConnection";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {AuthContext} from "../../router/auth.context";
-import Toast from "react-native-toast-message";
 import ToastComponent from "../../components/toast";
 
 export default function Singin() {
